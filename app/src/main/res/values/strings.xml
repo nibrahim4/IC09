@@ -17,4 +17,6 @@
     <string name="btn_cancel">Cancel</string>
     <string name="tv_fullName" />
     <string name="tv_inboxFullName" />
+    <string name="tv_subject" />
+    <string name="tv_date" />
 </resources>

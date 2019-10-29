@@ -40,6 +40,7 @@
         app:srcCompat="@drawable/addnew" />
 
     <ListView
+        android:id="@+id/lv_emails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_inboxFullName"
