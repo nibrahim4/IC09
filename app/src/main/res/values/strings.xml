@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">IC09</string>
+    <string name="et_emailMain" />
+    <string name="hint_emailMain">Email</string>
+    <string name="et_passwordMain" />
+    <string name="hint_passwordMain">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_signUpMain">Sign Up</string>
+    <string name="et_firstName" />
+    <string name="hint_firstName">First Name</string>
+    <string name="et_lastName" />
+    <string name="hint_lastName">Last Name</string>
+    <string name="hint_emailSignUp">Email</string>
+    <string name="hint_password1">Choose Password</string>
+    <string name="et_password2">Repeat Password</string>
+    <string name="btn_SignUp2">Sign Up</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="tv_fullName" />
+    <string name="tv_inboxFullName" />
 </resources>
