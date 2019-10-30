@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             String token = jsonObject.getString("token");
 
-                            SharedPreferences prefs =  SignUpActivity.this.getSharedPreferences("PREFERENCE_NAME",
+                            SharedPreferences prefs =  SignUpActivity.this.getSharedPreferences("com.example.ic09",
                                     Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("token", token);

@@ -3,9 +3,12 @@ package com.example.ic09;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ public class InboxActivity extends AppCompatActivity {
 
     public TextView tv_fullName;
     public ListView lv_emails;
+    public ImageView iv_newEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +42,21 @@ public class InboxActivity extends AppCompatActivity {
         tv_fullName = findViewById(R.id.tv_inboxFullName);
         tv_fullName.setText(fullName);
 
-
+        iv_newEmail = findViewById(R.id.iv_newEmail);
+        iv_newEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentToNewEmail = new Intent(InboxActivity.this, CreateNewEmailActivity.class);
+                startActivity(intentToNewEmail);
+            }
+        });
 
         lv_emails = findViewById(R.id.lv_emails);
 
         EmailAdapter emailAdapter = new EmailAdapter(InboxActivity.this, R.layout.email_item, null);
 
         // give adapter to ListView UI element to render
-        //lv_articles.setAdapter(newsAdapter);
+        lv_emails.setAdapter(emailAdapter);
 
         try {
             run();
