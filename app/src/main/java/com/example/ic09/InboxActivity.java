@@ -7,12 +7,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Telephony;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,6 +36,8 @@ public class InboxActivity extends AppCompatActivity {
     public TextView tv_fullName;
     public ListView lv_emails;
     public ImageView iv_newEmail;
+    public String token;
+    public List<String> messages = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +47,7 @@ public class InboxActivity extends AppCompatActivity {
 
         SharedPreferences pref = getPreferences( MODE_PRIVATE);
         String fullName = pref.getString("fullName", null);
+        token = pref.getString("token", null);
 
         tv_fullName = findViewById(R.id.tv_inboxFullName);
         tv_fullName.setText(fullName);
@@ -53,13 +63,17 @@ public class InboxActivity extends AppCompatActivity {
 
         lv_emails = findViewById(R.id.lv_emails);
 
-        EmailAdapter emailAdapter = new EmailAdapter(InboxActivity.this, R.layout.email_item, null);
-
-        // give adapter to ListView UI element to render
-        lv_emails.setAdapter(emailAdapter);
 
         try {
             run();
+
+
+            EmailAdapter emailAdapter = new EmailAdapter(InboxActivity.this, R.layout.email_item, messages);
+
+            // give adapter to ListView UI element to render
+            lv_emails.setAdapter(emailAdapter);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,6 +87,7 @@ public class InboxActivity extends AppCompatActivity {
 
         Request request = new Request.Builder()
                 .url("http://ec2-18-234-222-229.compute-1.amazonaws.com/api/inbox")
+                .header("Authorization", "BEARER " + token)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -82,14 +97,26 @@ public class InboxActivity extends AppCompatActivity {
 
             @Override public void onResponse(Call call, Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+                    if (!response.isSuccessful()){
+                        throw new IOException("Unexpected code " + response);
+                    }else{
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        JSONArray messageArray = jsonObject.getJSONArray("messages");
 
-                    Headers responseHeaders = response.headers();
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                        for (int i =0; i <messageArray.length(); i++){
+
+                            messages.add(messageArray.get(i).toString());
+                        }
+
+                        Headers responseHeaders = response.headers();
+                        for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                            Log.d("test", "header: " + responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                        }
+                        Log.d("test", "onResponse: " + responseBody.string());
+
                     }
-
-                    System.out.println(responseBody.string());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });

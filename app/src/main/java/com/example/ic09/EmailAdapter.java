@@ -10,10 +10,10 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class EmailAdapter extends ArrayAdapter<Email> {
+public class EmailAdapter extends ArrayAdapter<String> {
 
 
-    public EmailAdapter(@NonNull Context context, int resource, @NonNull List<Email> objects) {
+    public EmailAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
     }
 
