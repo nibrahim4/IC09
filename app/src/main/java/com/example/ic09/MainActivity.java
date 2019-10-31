@@ -74,11 +74,14 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response.body().string());
                             String token = jsonObject.getString("token");
 
-                            SharedPreferences prefs =  MainActivity.this.getSharedPreferences("com.example.ic09",
-                                    Context.MODE_PRIVATE);
+                            Log.d("test", "token from login: " + token);
+                            SharedPreferences prefs =  getSharedPreferences("com.example.ic09", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("token", token);
                             editor.apply();
+
+                           String receivedToken =  prefs.getString("token" , token);
+                            Log.d("test", "receivedToken: " + receivedToken);
 
                             Toast.makeText(MainActivity.this, "Login is successful!", Toast.LENGTH_SHORT).show();
                             Intent intentToInbox = new Intent(MainActivity.this, InboxActivity.class);

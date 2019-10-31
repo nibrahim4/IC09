@@ -1,25 +1,42 @@
 package com.example.ic09;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class EmailAdapter extends ArrayAdapter<String> {
+public class EmailAdapter extends ArrayAdapter<Email> {
 
 
-    public EmailAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
+    public EmailAdapter(@NonNull Context context, int resource, @NonNull List<Email> objects) {
         super(context, resource, objects);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        Email email = getItem(position);
+
+        Log.d("test", "Email " + email.toString());
+
+        if(convertView == null){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.email_item,parent, false);
+        }
+        TextView tv_subject = convertView.findViewById(R.id.tv_subject);
+        tv_subject.setText("hi"); //email.subject);
+
+        TextView tv_date = convertView.findViewById(R.id.tv_date);
+        tv_date.setText("hello"); //email.date);
+
 
         return convertView;
     }

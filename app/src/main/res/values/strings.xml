@@ -19,4 +19,9 @@
     <string name="tv_inboxFullName" />
     <string name="tv_subject" />
     <string name="tv_date" />
+    <string name="tv_sendTo">Send To:</string>
+    <string name="hint_subject">Subject</string>
+    <string name="tv_message">Message</string>
+    <string name="btn_send">Send</string>
+    <string name="btn_cancelNewEmail">Cancel</string>
 </resources>

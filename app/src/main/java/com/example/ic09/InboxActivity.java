@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Telephony;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,8 +37,9 @@ public class InboxActivity extends AppCompatActivity {
     public TextView tv_fullName;
     public ListView lv_emails;
     public ImageView iv_newEmail;
+    public ImageView iv_logout;
     public String token;
-    public List<String> messages = new ArrayList<String>();
+    public List<Email> messages = new ArrayList<Email>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +47,21 @@ public class InboxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inbox);
         setTitle("Inbox");
 
-        SharedPreferences pref = getPreferences( MODE_PRIVATE);
+        SharedPreferences pref = InboxActivity.this.getSharedPreferences( "com.example.ic09", MODE_PRIVATE);
         String fullName = pref.getString("fullName", null);
         token = pref.getString("token", null);
 
         tv_fullName = findViewById(R.id.tv_inboxFullName);
         tv_fullName.setText(fullName);
+
+        iv_logout = findViewById(R.id.iv_logOut);
+        iv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentToLogin = new Intent(InboxActivity.this, MainActivity.class);
+                startActivity(intentToLogin);
+            }
+        });
 
         iv_newEmail = findViewById(R.id.iv_newEmail);
         iv_newEmail.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +72,6 @@ public class InboxActivity extends AppCompatActivity {
             }
         });
 
-        lv_emails = findViewById(R.id.lv_emails);
-
 
         try {
             run();
@@ -70,8 +79,21 @@ public class InboxActivity extends AppCompatActivity {
 
             EmailAdapter emailAdapter = new EmailAdapter(InboxActivity.this, R.layout.email_item, messages);
 
+            lv_emails = findViewById(R.id.lv_emails);
             // give adapter to ListView UI element to render
             lv_emails.setAdapter(emailAdapter);
+
+            lv_emails.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    Intent intentToCreateNewEmail = new Intent(InboxActivity.this, CreateNewEmailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selectedEmail", messages.get(i));
+                    intentToCreateNewEmail.putExtra("toCreateNewEmail", intentToCreateNewEmail);
+                    startActivity(intentToCreateNewEmail);
+                }
+            });
 
 
         } catch (Exception e) {
@@ -105,14 +127,20 @@ public class InboxActivity extends AppCompatActivity {
 
                         for (int i =0; i <messageArray.length(); i++){
 
-                            messages.add(messageArray.get(i).toString());
+                            JSONObject messageObj = messageArray.getJSONObject(i);
+
+                            Email email = new Email();
+                            email.subject = messageObj.getString("subject");
+                            email.date = messageObj.getString("date");
+
+                            messages.add(email);
                         }
 
                         Headers responseHeaders = response.headers();
                         for (int i = 0, size = responseHeaders.size(); i < size; i++) {
                             Log.d("test", "header: " + responseHeaders.name(i) + ": " + responseHeaders.value(i));
                         }
-                        Log.d("test", "onResponse: " + responseBody.string());
+                       // Log.d("test", "onResponse: " + responseBody.string());
 
                     }
                 } catch (JSONException e) {
