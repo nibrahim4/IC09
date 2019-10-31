@@ -17,16 +17,21 @@ public class EmailAdapter extends ArrayAdapter<Email> {
 
 
     public EmailAdapter(@NonNull Context context, int resource, @NonNull List<Email> objects) {
+
         super(context, resource, objects);
+
+        Log.d("test", "EmailAdapter: " + "HIIII");
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
+        Log.d("test", "Email 12333333 ");
+
         Email email = getItem(position);
 
-        Log.d("test", "Email " + email.toString());
+
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.email_item,parent, false);

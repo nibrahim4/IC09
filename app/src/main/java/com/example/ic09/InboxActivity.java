@@ -76,7 +76,6 @@ public class InboxActivity extends AppCompatActivity {
         try {
             run();
 
-
             EmailAdapter emailAdapter = new EmailAdapter(InboxActivity.this, R.layout.email_item, messages);
 
             lv_emails = findViewById(R.id.lv_emails);
@@ -131,7 +130,7 @@ public class InboxActivity extends AppCompatActivity {
 
                             Email email = new Email();
                             email.subject = messageObj.getString("subject");
-                            email.date = messageObj.getString("date");
+                            //email.date = messageObj.getString("date");
 
                             messages.add(email);
                         }
