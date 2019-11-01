@@ -132,6 +132,8 @@ public class InboxActivity extends AppCompatActivity {
                             email.subject = messageObj.getString("subject");
                             email.message = messageObj.getString("message");
                             email.date = messageObj.getString("created_at");
+                            email.senderFName = messageObj.getString("sender_fname");
+                            email.senderLName = messageObj.getString("sender_lname");
 
                             messages.add(email);
                         }
