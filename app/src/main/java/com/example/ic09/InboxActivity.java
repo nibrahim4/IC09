@@ -86,11 +86,11 @@ public class InboxActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                    Intent intentToCreateNewEmail = new Intent(InboxActivity.this, CreateNewEmailActivity.class);
+                    Intent intentToDisplay = new Intent(InboxActivity.this, DisplayMailActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("selectedEmail", messages.get(i));
-                    intentToCreateNewEmail.putExtra("toCreateNewEmail", intentToCreateNewEmail);
-                    startActivity(intentToCreateNewEmail);
+                    intentToDisplay.putExtra("toDisplayMail", bundle);
+                    startActivity(intentToDisplay);
                 }
             });
 
@@ -130,7 +130,8 @@ public class InboxActivity extends AppCompatActivity {
 
                             Email email = new Email();
                             email.subject = messageObj.getString("subject");
-                            //email.date = messageObj.getString("date");
+                            email.message = messageObj.getString("message");
+                            email.date = messageObj.getString("created_at");
 
                             messages.add(email);
                         }

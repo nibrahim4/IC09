@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateNewEmailActivity"></activity>
+        <activity android:name=".DisplayMailActivity"></activity>
+        <activity android:name=".CreateNewEmailActivity" />
         <activity android:name=".InboxActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity">

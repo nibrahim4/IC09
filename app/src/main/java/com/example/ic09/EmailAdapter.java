@@ -36,11 +36,11 @@ public class EmailAdapter extends ArrayAdapter<Email> {
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.email_item,parent, false);
         }
-        TextView tv_subject = convertView.findViewById(R.id.tv_subject);
-        tv_subject.setText("hi"); //email.subject);
+        TextView tv_subject = convertView.findViewById(R.id.tv_subject_display);
+        tv_subject.setText(email.subject);
 
         TextView tv_date = convertView.findViewById(R.id.tv_date);
-        tv_date.setText("hello"); //email.date);
+        tv_date.setText(email.date);
 
 
         return convertView;

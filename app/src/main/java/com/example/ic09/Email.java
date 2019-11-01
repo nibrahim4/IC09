@@ -3,7 +3,7 @@ package com.example.ic09;
 import java.io.Serializable;
 
 public class Email implements Serializable {
-    public String subject;
+    public String subject, message;
 
     @Override
     public String toString() {

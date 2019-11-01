@@ -24,4 +24,9 @@
     <string name="tv_message">Message</string>
     <string name="btn_send">Send</string>
     <string name="btn_cancelNewEmail">Cancel</string>
+    <string name="tv_sender" />
+    <string name="btn_close">Close</string>
+    <string name="tv_subject_display" />
+    <string name="tv_message_display" />
+    <string name="tv_createdAt" />
 </resources>

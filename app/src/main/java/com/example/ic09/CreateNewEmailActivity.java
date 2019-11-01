@@ -41,6 +41,7 @@ public class CreateNewEmailActivity extends AppCompatActivity {
     public EditText et_subject;
     public EditText et_message;
     public Button btn_send;
+    public Button btn_cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,9 @@ public class CreateNewEmailActivity extends AppCompatActivity {
         setTitle("Create New Email");
 
         sp_users = findViewById(R.id.sp_users);
+        et_message = findViewById(R.id.et_message);
+        et_subject = findViewById(R.id.et_subject);
+        btn_cancel = findViewById(R.id.btn_cancel);
 
         try {
             SharedPreferences pref = CreateNewEmailActivity.this.getSharedPreferences("com.example.ic09", MODE_PRIVATE);
@@ -86,9 +90,9 @@ public class CreateNewEmailActivity extends AppCompatActivity {
 
                     //if (isConnected()) {
                         RequestBody formBody = new FormBody.Builder()
-                                .add("receiver_id", "1")
-                                .add("subject", "hi")
-                                .add("message", "hello")
+                                .add("receiver_id", "518")
+                                .add("subject", et_subject.getText().toString())
+                                .add("message", et_message.getText().toString())
                                 .build();
                         Request request = new Request.Builder()
                                 .url("http://ec2-18-234-222-229.compute-1.amazonaws.com/api/inbox/add")
@@ -117,6 +121,13 @@ public class CreateNewEmailActivity extends AppCompatActivity {
                     //} else {
                       //  Toast.makeText(CreateNewEmailActivity.this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
                    // }
+                }
+            });
+
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
                 }
             });
 
